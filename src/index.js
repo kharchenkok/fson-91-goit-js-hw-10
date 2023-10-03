@@ -49,11 +49,15 @@ function handleSearch(event) {
   fetchCatByBreed(breedId)
     .then(data => {
       refs.catInfo.classList.remove('is-hidden');
-      createInfoCardMarkup(refs.catInfo, data[0]);
+      data.length > 0
+        ? createInfoCardMarkup(refs.catInfo, data[0])
+        : Notify.failure(
+            "Sorry, but the information on this breed of cats is being clarified. We're sure all cats are amazing. Please choose another breed"
+          );
     })
     .catch(error => {
       console.error('Помилка під час запиту:', error);
-      Notify.failure('Oops! Something went wrong! Try reloading the page');
+      Notify.failure("'Oops! Something went wrong! Try reloading the page'");
     })
     .finally(() => {
       refs.loader.classList.add('is-hidden');
